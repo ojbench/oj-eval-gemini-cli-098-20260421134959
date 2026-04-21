@@ -28,6 +28,13 @@ void reverseInorder(Node* root, int& cnt, int& result) {
     reverseInorder(root->left, cnt, result);
 }
 
+void deleteTree(Node* root) {
+    if (!root) return;
+    deleteTree(root->left);
+    deleteTree(root->right);
+    delete root;
+}
+
 int main() {
     Node* root = nullptr;
     for (int i = 0; i < 7; ++i) {
@@ -36,10 +43,14 @@ int main() {
         root = insert(root, val);
     }
     int cnt;
-    if (!(std::cin >> cnt)) return 0;
+    if (!(std::cin >> cnt)) {
+        deleteTree(root);
+        return 0;
+    }
     int result = -1;
     int tempCnt = cnt;
     reverseInorder(root, tempCnt, result);
     std::cout << result << std::endl;
+    deleteTree(root);
     return 0;
 }
